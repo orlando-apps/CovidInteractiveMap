@@ -12,9 +12,9 @@ class CovidCircleUpdate extends React.Component {
 
   componentDidUpdate(prevProps){
     if(prevProps.info.cases !== this.props.info.cases){
-        this.setState({
-            value: this.props.info.cases
-        });
+      this.setState({
+          value: this.props.info.cases
+      });
     }
   }
 
@@ -43,12 +43,12 @@ class CovidCircleUpdate extends React.Component {
 
     return (
       <div>
-          <label>Location</label>
-          <br></br>
-          <h3>{info.location}</h3>
-          <br></br>
-          <label>Covid Case Counts</label>
-            <input type="text" value={this.state.value} onChange={this.handleUpdateChange} />
+        <label>Location</label>
+        <br></br>
+        <h3>{info.location}</h3>
+        <br></br>
+        <label>Covid Case Counts</label>
+        <input type="text" value={this.state.value} onChange={this.handleUpdateChange} />
         <div className = 'btn_margin_top'>
           <button className = {btnClass1} onClick={this.handleUpdateSubmit}>Update</button>
           <button className = {btnClass2} onClick={this.handleDeleteClick}>Delete</button>

@@ -47,10 +47,10 @@ class Map extends React.Component {
     let covidCircleList = []
     if (map){
       data.map(location => {
-        const covidCircle = this.createCovidCircle(map, location.latitude,location.longitude, 700)
-        this.createExistingCovidCircleListener(covidCircle)
-        let tmp = { covidCircle, cases: location.confirmed, location: location.location }
-        covidCircleList.push(tmp)
+        const covidCircle = this.createCovidCircle(map, location.latitude,location.longitude, 700);
+        this.createExistingCovidCircleListener(covidCircle);
+        let tmp = { covidCircle, cases: location.confirmed, location: location.location };
+        covidCircleList.push(tmp);
       })
     }
     this.setState({ covidCircleList })
@@ -58,7 +58,7 @@ class Map extends React.Component {
 
   createExistingCovidCircleListener(covidCircle){
     google.maps.event.addListener(covidCircle, 'click', (e) => {
-      const {covidCircleList} = this.state
+      const {covidCircleList} = this.state;
       for (let i = 0; i < covidCircleList.length; i++){
         let item = covidCircleList[i]
         if(item.covidCircle === covidCircle){
@@ -108,14 +108,13 @@ class Map extends React.Component {
 
       if (addCovidPoint){
         const covidCircle = this.createCovidCircle(map, mapsMouseEvent.latLng.lat(), mapsMouseEvent.latLng.lng(), 700)
-        const address = this.getAddressFromCovidCircle(covidCircle)
-
+        const address = this.getAddressFromCovidCircle(covidCircle);
       } else {
-        this.setUpAreaCaseCount( mapsMouseEvent.latLng, radius, map)
+        this.setUpAreaCaseCount( mapsMouseEvent.latLng, radius, map);
         infoWindow = new google.maps.InfoWindow({
           position: mapsMouseEvent.latLng,
         });
-        let total = this.addCasesInArea(radius)
+        let total = this.addCasesInArea(radius);
         infoWindow.setContent( `Case Count: ${total}`);
         infoWindow.open(map);
       }
@@ -252,21 +251,21 @@ class Map extends React.Component {
               }
 
           {this.state.addCovidPoint ?
-                  (
-                    <div className = "innerContainer" >
-                          <label>Add Covid Cases</label>
-                            <input
-                              type="number"
-                              value={covidCasesInput}
-                              onChange={this.handleCovidCasesInput} />
-                    </div>
-                  ):
+            (
+              <div className = "innerContainer" >
+                    <label>Add Covid Cases</label>
+                      <input
+                        type="number"
+                        value={covidCasesInput}
+                        onChange={this.handleCovidCasesInput} />
+              </div>
+            ):
             (<CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>)
           }
             </div>
             </div>
 
-          { deleteButton &&
+          {deleteButton &&
             (
               <div className = 'centerContainers'>
                 <CovidCircleUpdate

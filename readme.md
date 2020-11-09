@@ -1,6 +1,6 @@
 # Covid Interactive Map
 
-> This module populates confirmed covid cases in each United States county. Users can add, edit or delete covid locations or use the scope feature to see total number of Covid cases in one area.
+> This module populates confirmed Covid cases in each United States county. Users can add, edit or delete covid locations or use the scope feature to see total number of Covid cases in an area.
 
 ![Alt text](github_images/edit.png)
 ![Alt text](github_images/scope.png)
@@ -15,14 +15,13 @@
 
 ## Usage
 
-> Toggle "Scope" button and click on map to see accumulative covid cases within the radius. Update radius(meters) to expand or minimize scope area.
+> Toggle "Scope" button and click on map to see accumulative covid cases within radius. Specify radius(meters) input to expand or minimize scope area.
 
-> Toggle "New Point" button and click on map to add a new covid location. Update "Add Covid Cases" input field to add the number of Covid cases at the new location.
+> Toggle "New Point" button and click on map to add a new covid location. Modify "Add Covid Cases" input field to change the number of Covid cases to add at the new location.
 
 > Click on any red circle Covid location on the map. A component will popup, allowing user to edit or delete Covid case numbers.
 
-> Type in searchbar or select from options drop down to see total number of covid cases at a particular location.
-
+> Type in searchbar or select from options drop down to see total number of Covid cases at a particular location.
 
 ## Requirements
 
@@ -44,7 +43,6 @@ npm start
 npm run build
 ```
 
-
 ## Development
 ```sh
 Create a .env file in the root directory, with the following properties:
@@ -57,7 +55,6 @@ REACT_APP_GOOGLE_API_KEY = INSERT YOUR GOOGLE MAP API KEY
 ```sh
 Work in Progress
 ```
-
 
 ## Map Setup Explained<a name="Map_Setup_Explained"></a>
 
