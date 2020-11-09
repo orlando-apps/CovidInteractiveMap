@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 
 class CovidCircleUpdate extends React.Component {
   constructor(props) {
@@ -37,21 +38,33 @@ class CovidCircleUpdate extends React.Component {
 
   render() {
     const {info} = this.props
-    console.log(this.props)
+    const btnClass1 = classNames('action_btn', 'ui green button')
+    const btnClass2 = classNames('action_btn', 'ui red button')
+
     return (
       <div>
-        <form onSubmit={this.handleUpdateSubmit}>
-          <label>Location: {info.location}</label>
+          <label>Location: </label>
+          <br></br>
+          <h3>{info.location}</h3>
+          <br></br>
           <label>Covid Case Counts:</label>
-          <label>
             <input type="text" value={this.state.value} onChange={this.handleUpdateChange} />
-          </label>
-          <input type="submit" value="update" />
-        </form>
-        <button onClick={this.handleDeleteClick}>Delete</button>
+        <div className = 'btn_margin_top'>
+          <button className = {btnClass1} onClick={this.handleUpdateSubmit}>Update</button>
+          <button className = {btnClass2} onClick={this.handleDeleteClick}>Delete</button>
+        </div>
       </div>
     );
   }
 }
 
 export default CovidCircleUpdate
+
+{/* <form onSubmit={this.handleUpdateSubmit}>
+<label>Location: {info.location}</label>
+<label>Covid Case Counts:</label>
+<label>
+  <input type="text" value={this.state.value} onChange={this.handleUpdateChange} />
+</label>
+<input type="submit" value="update" />
+</form> */}

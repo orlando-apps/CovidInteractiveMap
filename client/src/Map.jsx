@@ -15,11 +15,11 @@ class Map extends React.Component {
       map: {},
       covidCircleList: [],
       circle: null,
-      radius: 40000,
+      radius: 25000,
       coveredCities: [],
       deleteButton: false,
       selectedCovidCircle: {},
-      addCovidPoint: true,
+      addCovidPoint: false,
       covidCasesInput: 50,
     }
   }
@@ -103,6 +103,7 @@ class Map extends React.Component {
 
     map.addListener("click", (mapsMouseEvent) => {
       const {circle, radius, addCovidPoint} = this.state
+      infoWindow.close();
       if(circle) circle.setMap(null)
 
       if (addCovidPoint){
@@ -111,7 +112,6 @@ class Map extends React.Component {
 
       } else {
         this.setUpAreaCaseCount( mapsMouseEvent.latLng, radius, map)
-        infoWindow.close();
         infoWindow = new google.maps.InfoWindow({
           position: mapsMouseEvent.latLng,
         });
@@ -200,6 +200,7 @@ class Map extends React.Component {
         item.cases = 0;
       }
     }
+    this.setState({deleteButton: false})
   }
 
   handleUpdateClick = (amount) => {
@@ -210,6 +211,7 @@ class Map extends React.Component {
         item.cases = +amount;
       }
     }
+    this.setState({deleteButton: false})
   }
 
   handleRadiusUpdate = (radius) =>{
@@ -237,23 +239,22 @@ class Map extends React.Component {
         </div>
         <div className = 'container'>
           <div className = 'deck'>
-            <div>
+            <div className = 'centerContainers'>
               { this.state.addCovidPoint ?
-                (<div className = 'button_div'>
+                (<div className = 'btn_margin_bot'>
                 <button className = {btnClass2} onClick={this.toggleButton}>New Point</button>
-                <button className = {btnClass1} onClick={this.toggleButton}>Scope</button>
+                <button className = {btnClass1} onClick={this.toggleButton}>  Scope  </button>
                 </div>) :
-                (<div className = 'button_div'>
+                (<div className = 'btn_margin_bot'>
                 <button className = {btnClass1} onClick={this.toggleButton}>New Point</button>
                 <button className = {btnClass2} onClick={this.toggleButton}>Scope</button>
                 </div>)
               }
-            </div>
 
             {this.state.addCovidPoint ?
                     (
                       <div className = "innerContainer" >
-                            <label>Radius</label>
+                            <label>Radius (meters)</label>
                               <input
                                 type="number"
                                 value={covidCasesInput}
@@ -262,7 +263,7 @@ class Map extends React.Component {
                     ):
               (<CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>)
             }
-
+            </div>
             </div>
 
             { deleteButton &&

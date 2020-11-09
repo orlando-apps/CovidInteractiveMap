@@ -1,22 +1,28 @@
 #map {
   height: 50vh;
-  border-top: 1px solid grey;
+  border-top: 1px solid rgba(0,0,0,.12);
+  border-radius: 0px 0px 10px 10px;
 }
 
 .main {
-  margin-top: 20px;
-  border: 1px solid grey;
+  margin-top: 10px;
+  border: 1px solid rgba(0,0,0,.12);
   border-radius: 10px;
+  font-family: Helvetica, sans-serif;
 }
 
 .mainTitle {
   padding: 10px
 }
 
+h2 {
+  letter-spacing: 2px;
+}
+
 html, body {
-  margin-top: 50px;
+  margin-top: 13px;
   height: 100vh;
-  margin: 20px;
+  margin: 13px;
   padding: 0;
 }
 
@@ -34,51 +40,54 @@ html, body {
 
 .container {
   margin-top: 25px;
-  border: 1px solid red;
   display: flex;
   justify-content: center;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
   color: rgba(0, 0, 0 , 0.73);
   font-size: 15px
 }
 
 .container input {
-
-
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   resize: vertical;
-  /* width: 100%;
-  border: 1px solid grey;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  color: rgba(0, 0, 0 , 0.73);
-  box-sizing: border-box;
-  outline: none;
-  max-width: 500px; */
 }
 
-
-/* .deck {
-  display: flex;
-  height: 200px;
-  flex-direction: column;
-} */
-
 .innerContainer {
-  max-width: 200px
+  max-width: 190px
 }
 
 .centerContainers {
-  border:solid 1px orange;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid rgba(0,0,0,.12);
+  max-width: 300px;
 }
 
 .action_btn {
   display: inline-block;
 }
 
-.button_div {
+.btn_margin_bot {
   margin-bottom: 10px;
+  margin-top: 10px
+}
+
+.btn_margin_top {
+  margin-top: 10px
+}
+
+label {
+  font-size: 13px;
+  color: black;
+  padding: 3px;
+}
+
+h3 {
+  letter-spacing: 1px;
+  line-height: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
