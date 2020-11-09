@@ -46,10 +46,11 @@ npm run build
 
 
 ## Development
+```sh
 Create a .env file in the root directory, with the following properties:
 
 REACT_APP_GOOGLE_API_KEY = INSERT YOUR GOOGLE MAP API KEY
-
+```
 
 ## Server Endpoints <a name="Server_Endpoints"></a>
 
@@ -60,6 +61,4 @@ Work in Progress
 
 ## Map Setup Explained<a name="Map_Setup_Explained"></a>
 
-```sh
 This app utilizes Google Maps Javascript API. When the Map.jsx component is loaded, a fetch request is created to collected Covid Case data. Upon completion of the of fetch, the google map api script is loaded. The script includes a callback that will create the map object and runs through subsequent map setups.
-```
