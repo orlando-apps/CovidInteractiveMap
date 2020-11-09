@@ -1,6 +1,6 @@
 # Covid Interactive Map
 
-> This module features populates confirmed covid cases in each United States county. Users can add, edit or delete covid locations or use the scope feature to see total number of Covid cases in one area.
+> This module populates confirmed covid cases in each United States county. Users can add, edit or delete covid locations or use the scope feature to see total number of Covid cases in one area.
 
 ![Alt text](github_images/edit.png)
 ![Alt text](github_images/scope.png)
@@ -61,4 +61,4 @@ Work in Progress
 
 ## Map Setup Explained<a name="Map_Setup_Explained"></a>
 
-This app utilizes Google Maps Javascript API. When the Map.jsx component is loaded, a fetch request is created to collected Covid Case data. Upon completion of the of fetch, the google map api script is loaded. The script includes a callback that will create the map object and runs through subsequent map setups.
+This app utilizes Google Maps Javascript API. When the Map.jsx component is loaded, a fetch request is created to collect Covid Case data. Upon completion of the of fetch, the google map api script is loaded. The script includes a callback that will create the map object and run through subsequent map setups.

@@ -22,7 +22,7 @@ class CovidCircleUpdate extends React.Component {
     event.preventDefault();
     const {handleUpdateClick, info} = this.props
     const {value} = this.state
-    handleUpdateClick(value)
+    handleUpdateClick(+value)
     alert(`Updated case count for ${info.location}`);
   }
 

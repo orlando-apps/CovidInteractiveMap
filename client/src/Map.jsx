@@ -223,7 +223,7 @@ class Map extends React.Component {
   }
 
   handleCovidCasesInput = (event) => {
-    this.setState({covidCasesInput: event.target.value});
+    this.setState({covidCasesInput: +event.target.value});
   }
 
   render() {
