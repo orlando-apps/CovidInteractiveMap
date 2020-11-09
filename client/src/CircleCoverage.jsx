@@ -17,7 +17,7 @@ class CircleCoverage extends React.Component {
     return (
       <div className = "innerContainer">
         <div>
-          <label>Number of Cases</label>
+          <label>Radius (meters)</label>
           <input type="number" value={this.state.radius} onChange={this.handleChange} />
         </div>
       </div>

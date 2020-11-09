@@ -11,7 +11,7 @@ class AutoComplete extends React.Component {
   }
 
   onTextChange = (e) => {
-    const {data} = this.props
+    const {data, handle} = this.props
     const value = e.target.value;
     let options = [];
     if(value.length > 0){
@@ -19,6 +19,7 @@ class AutoComplete extends React.Component {
       options = data.sort().filter(item => regex.test(item))
     }
     this.setState({options, value})
+    handle(value)
   }
 
   optionSelected(value){
@@ -26,6 +27,7 @@ class AutoComplete extends React.Component {
       value,
       options: []
     })
+    this.props.handle(value)
   }
 
   renderOptions () {
@@ -35,7 +37,7 @@ class AutoComplete extends React.Component {
     }
     return (
       <ul>
-        {options.map((item) => <li onClick = {() => this.optionSelected(item)}> {item} </li>)}
+        {options.map((item) => <li key = {item} onClick = {() => this.optionSelected(item)}> {item} </li>)}
       </ul>
     )
   }

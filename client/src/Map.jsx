@@ -251,33 +251,33 @@ class Map extends React.Component {
                 </div>)
               }
 
-            {this.state.addCovidPoint ?
-                    (
-                      <div className = "innerContainer" >
-                            <label>Radius (meters)</label>
-                              <input
-                                type="number"
-                                value={covidCasesInput}
-                                onChange={this.handleCovidCasesInput} />
-                      </div>
-                    ):
-              (<CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>)
-            }
+          {this.state.addCovidPoint ?
+                  (
+                    <div className = "innerContainer" >
+                          <label>Add Covid Cases</label>
+                            <input
+                              type="number"
+                              value={covidCasesInput}
+                              onChange={this.handleCovidCasesInput} />
+                    </div>
+                  ):
+            (<CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>)
+          }
             </div>
             </div>
 
-            { deleteButton &&
-              (
-                <div className = 'centerContainers'>
-                  <CovidCircleUpdate
-                    info = {selectedCovidCircle}
-                    handleDeleteClick = {this.handleDeleteClick}
-                    handleUpdateClick = {this.handleUpdateClick}
-                    />
-                </div>
-              )
-            }
-          <div className = 'centerContainers'>
+          { deleteButton &&
+            (
+              <div className = 'centerContainers'>
+                <CovidCircleUpdate
+                  info = {selectedCovidCircle}
+                  handleDeleteClick = {this.handleDeleteClick}
+                  handleUpdateClick = {this.handleUpdateClick}
+                  />
+              </div>
+            )
+          }
+          <div className = 'centerContainerRight'>
             <SearchBar data = {data} />
           </div>
         </div>
