@@ -38,7 +38,6 @@ const SearchBar = (props) => {
           let obj = data[i]['location']
           let [county, state] = obj.split(', ')
           if ( county === inputCounty && state === inputState){
-            console.log('check')
             let count = data[i]['confirmed']
             setLocationCovidCases(count.toLocaleString())
             return
