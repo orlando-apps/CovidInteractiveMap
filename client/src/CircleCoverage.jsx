@@ -13,21 +13,13 @@ class CircleCoverage extends React.Component {
     this.props.handleRadiusUpdate(+event.target.value)
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // this.props.handleRadiusUpdate(+this.state.radius)
-  }
-
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Set Radius:
-            <input type="text" value={this.state.radius} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Update" />
-        </form>
+      <div className = "innerContainer">
+        <div>
+          <label>Number of Cases</label>
+          <input type="number" value={this.state.radius} onChange={this.handleChange} />
+        </div>
       </div>
     );
   }

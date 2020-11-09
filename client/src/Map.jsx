@@ -4,6 +4,7 @@ import CovidCircleUpdate from './CovidCircleUpdate.jsx';
 import CircleCoverage from './CircleCoverage.jsx';
 import axios from 'axios';
 import PaleDawn from './MapStyles/PaleDawn';
+import classNames from 'classnames'
 
 class Map extends React.Component {
   constructor(props) {
@@ -131,7 +132,6 @@ class Map extends React.Component {
           let tmp = { covidCircle, cases: covidCasesInput, location }
           covidCircleList.push(tmp)
           this.setState({ covidCircleList })
-          //this.createNewCovidCircleListener(covidCircle, location, covidCasesInput)
           this.createExistingCovidCircleListener(covidCircle)
         }
       }
@@ -226,39 +226,59 @@ class Map extends React.Component {
 
   render() {
     const {data, deleteButton, selectedCovidCircle, radius, covidCasesInput} = this.state
+    const btnClass1 = classNames('action_btn', 'ui grey button')
+    const btnClass2 = classNames('action_btn', 'ui green button')
+
     return (
       <div>
-        <div id="map"></div>
+        <div className = 'main'>
+          <div className = 'mainTitle'> Covid Interactive Map </div>
+          <div id="map"></div>
+        </div>
         <div className = 'container'>
-          {this.state.addCovidPoint ? 'add Point': 'add coverage'}
-          <div>
-            <button onClick={this.toggleButton}>
-              Toggle
-            </button>
-          <div>
-          <CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>
-          { deleteButton && (
-          <div>
-            <CovidCircleUpdate
-              info = {selectedCovidCircle}
-              handleDeleteClick = {this.handleDeleteClick}
-              handleUpdateClick = {this.handleUpdateClick}
-              />
+          <div className = 'deck'>
+            <div>
+              { this.state.addCovidPoint ?
+                (<div className = 'button_div'>
+                <button className = {btnClass2} onClick={this.toggleButton}>New Point</button>
+                <button className = {btnClass1} onClick={this.toggleButton}>Scope</button>
+                </div>) :
+                (<div className = 'button_div'>
+                <button className = {btnClass1} onClick={this.toggleButton}>New Point</button>
+                <button className = {btnClass2} onClick={this.toggleButton}>Scope</button>
+                </div>)
+              }
+            </div>
+
+            {this.state.addCovidPoint ?
+                    (
+                      <div className = "innerContainer" >
+                            <label>Radius</label>
+                              <input
+                                type="number"
+                                value={covidCasesInput}
+                                onChange={this.handleCovidCasesInput} />
+                      </div>
+                    ):
+              (<CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>)
+            }
+
+            </div>
+
+            { deleteButton &&
+              (
+                <div className = 'centerContainers'>
+                  <CovidCircleUpdate
+                    info = {selectedCovidCircle}
+                    handleDeleteClick = {this.handleDeleteClick}
+                    handleUpdateClick = {this.handleUpdateClick}
+                    />
+                </div>
+              )
+            }
+          <div className = 'centerContainers'>
+            <SearchBar data = {data} />
           </div>
-          )
-          }
-                    <form>
-                      <label>
-                        Number of Covid Cases:
-                        <input
-                          type="number"
-                          value={covidCasesInput}
-                          onChange={this.handleCovidCasesInput} />
-                      </label>
-                    </form>
-                  </div>
-              </div>
-          <SearchBar data = {data} />
         </div>
       </div>
     );

@@ -1,11 +1,22 @@
 #map {
-  height: 40vh;
+  height: 50vh;
+  border-top: 1px solid grey;
+}
+
+.main {
+  margin-top: 20px;
+  border: 1px solid grey;
+  border-radius: 10px;
+}
+
+.mainTitle {
+  padding: 10px
 }
 
 html, body {
   margin-top: 50px;
   height: 100vh;
-  margin: 10px;
+  margin: 20px;
   padding: 0;
 }
 
@@ -23,7 +34,51 @@ html, body {
 
 .container {
   margin-top: 25px;
+  border: 1px solid red;
   display: flex;
   justify-content: center;
-  border: 1px solid red;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgba(0, 0, 0 , 0.73);
+  font-size: 15px
+}
+
+.container input {
+
+
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  /* width: 100%;
+  border: 1px solid grey;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0 , 0.73);
+  box-sizing: border-box;
+  outline: none;
+  max-width: 500px; */
+}
+
+
+/* .deck {
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+} */
+
+.innerContainer {
+  max-width: 200px
+}
+
+.centerContainers {
+  border:solid 1px orange;
+}
+
+.action_btn {
+  display: inline-block;
+}
+
+.button_div {
+  margin-bottom: 10px;
 }
