@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBar from './SearchBar.jsx';
 import CovidCircleUpdate from './CovidCircleUpdate.jsx';
+import CircleCoverage from './CircleCoverage.jsx';
 import axios from 'axios';
 import PaleDawn from './MapStyles/PaleDawn';
 
@@ -17,6 +18,8 @@ class Map extends React.Component {
       coveredCities: [],
       deleteButton: false,
       selectedCovidCircle: {},
+      addCovidPoint: true,
+      covidCasesInput: 50,
     }
   }
 
@@ -41,42 +44,56 @@ class Map extends React.Component {
   setUpMarkers (map){
     const {data} = this.state
     let covidCircleList = []
-    let counter = 0;
     if (map){
       data.map(location => {
-        const covidCircle = new google.maps.Circle({
-          strokeColor: "#FF0000",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: "#FF0000",
-          fillOpacity: 0.35,
-          map,
-          center: {lat: location.latitude, lng: location.longitude},
-          radius: 700,
-        });
+        const covidCircle = this.createCovidCircle(map, location.latitude,location.longitude, 700)
+        this.createExistingCovidCircleListener(covidCircle)
         let tmp = { covidCircle, cases: location.confirmed, location: location.location }
         covidCircleList.push(tmp)
-
-        google.maps.event.addListener(covidCircle, 'click', (e) => {
-          const {covidCircleList} = this.state
-          for (let i = 0; i < covidCircleList.length; i++){
-            let item = covidCircleList[i]
-            if(item.covidCircle === covidCircle){
-              this.setState({
-                deleteButton: true,
-                selectedCovidCircle: {covidCircle, cases:item.cases, location:item.location}
-              })
-            }
-          }
-        })
       })
     }
     this.setState({ covidCircleList })
   }
 
-  setUpListener(map){
-    const {radius} = this.state
+  createExistingCovidCircleListener(covidCircle){
+    google.maps.event.addListener(covidCircle, 'click', (e) => {
+      const {covidCircleList} = this.state
+      for (let i = 0; i < covidCircleList.length; i++){
+        let item = covidCircleList[i]
+        if(item.covidCircle === covidCircle){
+          this.setState({
+            deleteButton: true,
+            selectedCovidCircle: {covidCircle, cases:item.cases, location:item.location}
+          })
+        }
+      }
+    })
+  }
 
+  createNewCovidCircleListener(covidCircle, location, cases){
+    google.maps.event.addListener(covidCircle, 'click', (e) => {
+      this.setState({
+        deleteButton: true,
+        selectedCovidCircle: {covidCircle, cases, location}
+      })
+    })
+  }
+
+  createCovidCircle(map, lat, lng, radius){
+    const covidCircle = new google.maps.Circle({
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35,
+      map,
+      center: {lat, lng},
+      radius,
+    });
+    return covidCircle
+  }
+
+  setUpListener(map){
     let infoWindow = new google.maps.InfoWindow({
       content: "Click on map to see case count",
       position: {lat: this.state.currentLocation[0], lng: this.state.currentLocation[1]},
@@ -84,16 +101,40 @@ class Map extends React.Component {
     infoWindow.open(map);
 
     map.addListener("click", (mapsMouseEvent) => {
-      const {circle} = this.state
+      const {circle, radius, addCovidPoint} = this.state
       if(circle) circle.setMap(null)
-      this.setUpAreaCaseCount( mapsMouseEvent.latLng, radius, map)
-      infoWindow.close();
-      infoWindow = new google.maps.InfoWindow({
-        position: mapsMouseEvent.latLng,
-      });
-      let total = this.addCasesInArea(radius)
-      infoWindow.setContent( `Case Count: ${total}`);
-      infoWindow.open(map);
+
+      if (addCovidPoint){
+        const covidCircle = this.createCovidCircle(map, mapsMouseEvent.latLng.lat(), mapsMouseEvent.latLng.lng(), 700)
+        const address = this.getAddressFromCovidCircle(covidCircle)
+
+      } else {
+        this.setUpAreaCaseCount( mapsMouseEvent.latLng, radius, map)
+        infoWindow.close();
+        infoWindow = new google.maps.InfoWindow({
+          position: mapsMouseEvent.latLng,
+        });
+        let total = this.addCasesInArea(radius)
+        infoWindow.setContent( `Case Count: ${total}`);
+        infoWindow.open(map);
+      }
+    });
+  }
+
+  getAddressFromCovidCircle (covidCircle) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'latLng': covidCircle.center}, (results, status) => {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[0]) {
+          let location = results[0].formatted_address
+          const { covidCircleList, covidCasesInput } = this.state
+          let tmp = { covidCircle, cases: covidCasesInput, location }
+          covidCircleList.push(tmp)
+          this.setState({ covidCircleList })
+          //this.createNewCovidCircleListener(covidCircle, location, covidCasesInput)
+          this.createExistingCovidCircleListener(covidCircle)
+        }
+      }
     });
   }
 
@@ -171,22 +212,54 @@ class Map extends React.Component {
     }
   }
 
+  handleRadiusUpdate = (radius) =>{
+    this.setState({radius})
+  }
+
+  toggleButton = () => {
+    this.setState({addCovidPoint:!this.state.addCovidPoint});
+  }
+
+  handleCovidCasesInput = (event) => {
+    this.setState({covidCasesInput: event.target.value});
+  }
+
   render() {
-    const {data, deleteButton, selectedCovidCircle} = this.state
+    const {data, deleteButton, selectedCovidCircle, radius, covidCasesInput} = this.state
     return (
       <div>
-      <div id="map"></div>
-        { deleteButton && (
-        <div>
-          <CovidCircleUpdate
-            info = {selectedCovidCircle}
-            handleDeleteClick = {this.handleDeleteClick}
-            handleUpdateClick = {this.handleUpdateClick}
-            />
+        <div id="map"></div>
+        <div className = 'container'>
+          {this.state.addCovidPoint ? 'add Point': 'add coverage'}
+          <div>
+            <button onClick={this.toggleButton}>
+              Toggle
+            </button>
+          <div>
+          <CircleCoverage radius = {radius} handleRadiusUpdate = {this.handleRadiusUpdate}/>
+          { deleteButton && (
+          <div>
+            <CovidCircleUpdate
+              info = {selectedCovidCircle}
+              handleDeleteClick = {this.handleDeleteClick}
+              handleUpdateClick = {this.handleUpdateClick}
+              />
+          </div>
+          )
+          }
+                    <form>
+                      <label>
+                        Number of Covid Cases:
+                        <input
+                          type="number"
+                          value={covidCasesInput}
+                          onChange={this.handleCovidCasesInput} />
+                      </label>
+                    </form>
+                  </div>
+              </div>
+          <SearchBar data = {data} />
         </div>
-        )
-        }
-        <SearchBar data = {data} />
       </div>
     );
   }

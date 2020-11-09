@@ -11,7 +11,6 @@ app.use(morgan('dev'));
 app.get('/api/options', (req, res) => {
   connection.OptionsModel.findAll({})
   .then((product) => {
-    console.log("yo from server")
     console.log(product)
     res.status(200).send(product)
   })

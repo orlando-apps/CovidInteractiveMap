@@ -16,8 +16,14 @@ html, body {
   float:left;
 }
 
-
 #wrapper {
   border: 1px solid black;
   overflow: hidden;
+}
+
+.container {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid red;
 }
